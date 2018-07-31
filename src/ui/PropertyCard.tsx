@@ -2,29 +2,25 @@ import * as React from "react";
 import styled from "styled-components";
 import { FormattedNumber, FormattedMessage } from "react-intl";
 import { Flex } from "grid-styled";
+import Text, { colors, sizes } from "./Text";
 
 export interface Props {
   imageUrl: string;
   address: string;
   squareSize: number;
   bedrooms: number;
+  onClick: () => void;
   price: number;
 }
 
-const PropertyCardWrapper = styled(Flex).attrs({ flexDirection: "column" })`
+const Wrapper = styled(Flex).attrs({ flexDirection: "column" })`
   border: 0.1rem solid ${p => p.theme.borderPrimary};
-  padding: 1rem;
+  padding: 0 1rem 1rem;
 `;
 
 const PreviewImage = styled.img`
   height: auto;
   width: 100%;
-`;
-
-const Price = styled.strong`
-  color: white;
-  font-size: 2rem;
-  margin: 0;
 `;
 
 const TitleWrapper = styled(Flex)`
@@ -38,6 +34,7 @@ const TitleWrapper = styled(Flex)`
 
 const ImageWrapper = styled.div`
   position: relative;
+  margin: 0 -1rem;
 
   &:before {
     content: "";
@@ -55,16 +52,6 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const Title = styled.a`
-  font-size: 2rem;
-  color: white;
-`;
-
-const Address = styled.address`
-  font-size: 1.6rem;
-  margin-top: 1rem;
-`;
-
 const Tag = styled.strong`
   background: ${p => p.theme.primary};
   display: block;
@@ -79,32 +66,35 @@ const PropertyCard: React.SFC<Props> = ({
   address,
   bedrooms,
   imageUrl,
+  onClick,
   price,
   squareSize
 }: Props) => (
-  <PropertyCardWrapper>
+  <Wrapper onClick={onClick}>
     <ImageWrapper>
       <PreviewImage src={imageUrl} />
       <Tag>
         <FormattedMessage id="prop.forRent" defaultMessage="For rent" />
       </Tag>
       <TitleWrapper>
-        <Title>
+        <Text color={colors.WHITE}>
           <FormattedMessage
             id="prop.title"
             defaultMessage="{bedrooms} br flat, {squareSize}m2"
             values={{ bedrooms, squareSize }}
           />
-        </Title>
-        <Price>
+        </Text>
+        <Text is="strong" color={colors.WHITE}>
           $
           <FormattedNumber value={price} format="currency" />
-        </Price>
+        </Text>
       </TitleWrapper>
     </ImageWrapper>
 
-    <Address>{address}</Address>
-  </PropertyCardWrapper>
+    <Text mt="1rem" size={sizes.SMALL}>
+      {address}
+    </Text>
+  </Wrapper>
 );
 
 export default PropertyCard;
