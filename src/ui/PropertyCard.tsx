@@ -12,7 +12,7 @@ export interface StaticComps {
 
 const PropertyCardWrapper = styled.div`
   padding: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 0.1rem solid ${p => p.theme.borderPrimary};
 `;
 
 const PropertyCard: React.SFC<Props> & StaticComps = ({ children }: Props) => (
