@@ -1,6 +1,8 @@
 import React from "react";
 import { configure, addDecorator } from "@storybook/react";
 import { ThemeProvider, injectGlobal } from "styled-components";
+import { IntlProvider } from "react-intl";
+
 import theme from "../src/theme.ts";
 import globalStyles from "../src/globalStyles.ts";
 
@@ -10,6 +12,7 @@ function loadStories() {
   req.keys().forEach(filename => req(filename));
 }
 
+addDecorator(storyFn => <IntlProvider locale="cs">{storyFn()}</IntlProvider>);
 addDecorator(storyFn => (
   <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>
 ));
